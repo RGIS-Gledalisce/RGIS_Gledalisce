@@ -44,5 +44,5 @@ jobs:
           file: ./RGIS_Gledalisce/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/rgis_gledalisce:latest
-            ${{ secrets.DOCKER_USERNAME }}/rgis_gledalisce:${{ github.sha }}
+            filip1123/rgis_gledalisce:latest
+            filip1123/rgis_gledalisce:${{ github.sha }}
