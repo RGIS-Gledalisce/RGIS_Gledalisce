@@ -1,0 +1,1 @@
+docker run -p 8082:8080 filip1123/rgis_gledalisce:latest
