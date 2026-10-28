@@ -1,3 +1,4 @@
+
 name: Build and Push Docker Image
 
 on:
@@ -5,6 +6,10 @@ on:
     branches:
       - main
   workflow_dispatch:
+
+env:
+  IMAGE_NAME: rgis_gledalisce
+  AZURE_WEBAPP_NAME: rgisgledalisce
 
 jobs:
   build:
@@ -44,5 +49,17 @@ jobs:
           file: ./RGIS_Gledalisce/Dockerfile
           push: true
           tags: |
-            filip1123/rgis_gledalisce:latest
-            filip1123/rgis_gledalisce:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+            ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: index.docker.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
