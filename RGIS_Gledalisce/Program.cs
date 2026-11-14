@@ -20,4 +20,10 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("/api/deploy-test", () => new
+{
+    message = "CD deployment successful",
+    version = "1.0"
+});
+
 app.Run();
