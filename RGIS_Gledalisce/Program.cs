@@ -1,4 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using RGIS_Gledalisce.Data;
+using RGIS_Gledalisce.Models;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<BazaContext>(options =>
+    options.UseSqlite(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 
